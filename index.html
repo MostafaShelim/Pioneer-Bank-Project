@@ -36,13 +36,13 @@
             <div class="col-md-4">
                 <div class="withdraw status">
                     <h5>Withdraw</h5>
-                    <h2>$ 00</h2>
+                    <h2>$ <span id="current-withdraw-value">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="balance status">
                     <h5>Balance</h5>
-                    <h2>$ 1240</h2>
+                    <h2>$ <span id="balance-value">1240</span></h2>
                 </div>
             </div>
         </div>
@@ -58,9 +58,9 @@
             <div class="col-md-6">
                 <div class="submit-area">
                     <h4>Withdraw</h4>
-                    <input class="form-control" type="text" placeholder="$ amount you want to withdraw">
+                    <input id="withdraw-value" class="form-control" type="text" placeholder="$ amount you want to withdraw">
                     <br>
-                    <button class="btn btn-success">Withdraw</button>
+                    <button id="add-withdraw" class="btn btn-success">Withdraw</button>
                 </div>
             </div>
         </div>
@@ -75,18 +75,49 @@
             const transactionArea = document.getElementById('transaction-area');
             transactionArea.style.display = 'block';
         })
-        //add deposit handler
+        //deposit handler
         const addDeposit = document.getElementById('add-deposit');
         addDeposit.addEventListener('click', function(){
             const depositValue = document.getElementById('deposit-value').value;
             const depositAmount = parseFloat(depositValue);
             
+            //adding to deposit
             const currentDepositValue = document.getElementById('current-deposit-value').innerText;
             const currentDepositeAmount = parseFloat(currentDepositValue);
             const totalDepositAmount = currentDepositeAmount + depositAmount;
-
             document.getElementById('current-deposit-value').innerText = totalDepositAmount;
+
+            // deposit input blanking
             document.getElementById('deposit-value').value = '';
+
+            //adding to balance
+            const balanceValue = document.getElementById('balance-value').innerText;
+            const balanceAmount = parseFloat(balanceValue);
+            const totalBalanceAmount = depositAmount + balanceAmount;
+            document.getElementById('balance-value').innerText = totalBalanceAmount;
+
+        })
+
+        // withdraw handler
+        const addWithdraw = document.getElementById('add-withdraw');
+        addWithdraw.addEventListener('click', function(){
+            // withdraw inputting
+            const withdrawValue = document.getElementById('withdraw-value').value;
+            const withdrawAmount = parseFloat(withdrawValue);
+            document.getElementById('withdraw-value').value = '';
+
+            //adding to withdraw
+            const currentWithdrawValue = document.getElementById('current-withdraw-value').innerText;
+            const currentWithdrawAmount = parseFloat(currentWithdrawValue);
+            const totalWithdrawAmount = currentWithdrawAmount + withdrawAmount;
+
+            document.getElementById('current-withdraw-value').innerText = totalWithdrawAmount;
+
+            //subtracting from balance
+            const balanceValue = document.getElementById('balance-value').innerText;
+            const balanceAmount = parseFloat(balanceValue);
+            const totalBalanceAmount = balanceAmount - withdrawAmount;
+            document.getElementById('balance-value').innerText = totalBalanceAmount;
 
         })
     </script>
